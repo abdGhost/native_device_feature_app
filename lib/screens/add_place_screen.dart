@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:native_device_feature/provider/user_places.dart';
 
-class AddPlaceScreen extends StatefulWidget {
+class AddPlaceScreen extends ConsumerStatefulWidget {
   const AddPlaceScreen({super.key});
   @override
-  State<AddPlaceScreen> createState() {
+  ConsumerState<AddPlaceScreen> createState() {
     return _AddPlaceScreen();
   }
 }
 
-class _AddPlaceScreen extends State<AddPlaceScreen> {
+class _AddPlaceScreen extends ConsumerState<AddPlaceScreen> {
   final _titleController = TextEditingController();
 
   @override
   void dispose() {
     _titleController.dispose();
     super.dispose();
+  }
+
+  void _savePlace() {
+    final enterTitle = _titleController.text;
+
+    if (enterTitle.isEmpty) {
+      return;
+    }
+    ref.read(userPlaceProvider.notifier).addPlace(enterTitle);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -47,7 +59,7 @@ class _AddPlaceScreen extends State<AddPlaceScreen> {
               height: 16,
             ),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: _savePlace,
               icon: const Icon(
                 Icons.place,
               ),
