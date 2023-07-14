@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:native_device_feature/screens/place_details_screen.dart';
 
 import '../models/place.dart';
 
@@ -31,6 +31,15 @@ class PlacesListWidget extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onBackground,
               ),
         ),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (ctx) => PlaceDetailsScreen(
+                place: places[index],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
